@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind utilities;
+
+.custom-checkbox {
+  @apply relative inline-block select-none;
+
+  & .checkbox {
+    @apply opacity-0 invisible absolute;
+
+    &:checked + span::before {
+      @apply border-primary bg-primary;
+    }
+    &:checked + span::after {
+      content: url("data:image/svg+xml; utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20px' height='20px' fill='none' viewBox='0 0 24 24' stroke='%23ffff' stroke-width='3'><path stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7' /></svg>");
+      @apply absolute top-1/2 h-5 w-5 transform -translate-y-1/2 left-0 bg-contain inline-block;
+    }
+  }
+
+  & span {
+    @apply cursor-pointer relative flex items-center transition duration-300;
+
+    &::before {
+      @apply border border-gray-300 rounded content-[''] inline-flex shrink-0 h-5 w-5 mr-3;
+    }
+  }
+}

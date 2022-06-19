@@ -40,6 +40,7 @@ const RENDER_EVENT = "render-book";
 const CREATED_EVENT = "saved-book";
 const DELETED_EVENT = "deleted-book";
 const UPDATED_EVENT = "update-book";
+const SEARCHED_EVENT = "search-book";
 const STORAGE_KEY = "BOOKSHELF_DATA";
 
 /**
@@ -213,11 +214,12 @@ function updateBook(bookId) {
  * Membuat elemen buku dan menambahkan ke dalam DOM
  * @param {string} shelf 
  * @param {string} container 
+ * @param {object} book
  */
-function pushBooksIntoShelfContainer(shelf, container) {
+function pushBooksIntoShelfContainer(shelf, container, allBooks = books) {
   const shelfContainer = document.getElementById(container);
   shelfContainer.innerHTML = "";
-  const filteredBooks = books.filter((book) => book.isComplete === (shelf === BOOKSHELF.READ));
+  const filteredBooks = allBooks.filter((book) => book.isComplete === (shelf === BOOKSHELF.READ));
   filteredBooks.forEach((book) => {
     const textLabel = book.isComplete ? BOOKSHELF.UNREAD.toLowerCase() : BOOKSHELF.READ.toLowerCase();
     const unReadIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>';
@@ -288,6 +290,20 @@ function renderShelfData() {
   pushBooksIntoShelfContainer(BOOKSHELF.UNREAD, "unread-books");
   pushBooksIntoShelfContainer(BOOKSHELF.READ, "read-books");
 }
+
+function searchBook(query) {
+  const filteredBooks = books.filter((book) => {
+    return book.title.toLowerCase().includes(query.toLowerCase()) || book.author.toLowerCase().includes(query.toLowerCase());
+  });
+  return filteredBooks;
+}
+
+function renderSearchResult(filteredBooks) {
+  pushBooksIntoShelfContainer(BOOKSHELF.UNREAD, "unread-books-in-search-result", filteredBooks);
+  pushBooksIntoShelfContainer(BOOKSHELF.READ, "read-books-in-search-result", filteredBooks);
+  document.dispatchEvent(new Event(SEARCHED_EVENT));
+}
+
 /**
  * Fungsi ini digunakan untuk memeriksa apakah checkbox 'selesai dibaca' terceklis
  * Jika terceklis maka label pada tombol berisi 'selesai dibaca'
@@ -328,11 +344,13 @@ function handleTabs() {
     trigger.addEventListener("click", (e) => {
       e.preventDefault();
       toggleTabs(e);
+      setSearchResultVisibility(false)
     });
     trigger.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
         toggleTabs(e);
+        setSearchResultVisibility(false)
       }
     });
   });
@@ -398,6 +416,25 @@ function removeConfirmDialog() {
   };
 }
 
+function closeAllTabs() {
+  const tabs = document.querySelectorAll('[role="tab"]');
+  const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+  tabs.forEach((tab) => {
+    tab.setAttribute("aria-selected", "false");
+  });
+  tabPanels.forEach((panel) => {
+    panel.setAttribute("aria-hidden", "true");
+  });
+}
+
+function setSearchResultVisibility(visible) {
+  if (visible) {
+    document.querySelector('#search-result').classList.remove('hidden');
+  } else {
+    document.querySelector('#search-result').classList.add('hidden');
+  }
+}
+
 function confirmationMessage(action) {
   return `Apakah anda yakin ingin ${action} ini?`;
 }
@@ -423,10 +460,16 @@ document.addEventListener(DELETED_EVENT, () => {
   );
 });
 
+document.addEventListener(SEARCHED_EVENT, () => {
+  closeAllTabs();
+  setSearchResultVisibility(true);
+});
+
 document.addEventListener(RENDER_EVENT, () => {
   setForm("#form", ACTION.CREATE);
   updateCountLabel();
   renderShelfData();
+  setSearchResultVisibility(false);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -448,6 +491,17 @@ document.addEventListener("DOMContentLoaded", function () {
       updateBook(form.getAttribute("data-id"));
     }
   });
+
+  const searchForm = document.querySelector("#search-form");
+  searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const query = e.target.querySelector("[name='query']").value;
+    if (query) {  
+      const filteredBooks = searchBook(query);
+      renderSearchResult(filteredBooks);
+      document.querySelector('#query').innerHTML = query;
+    }
+  })
 
   renderShelfData();
 });

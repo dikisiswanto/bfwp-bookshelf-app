@@ -424,6 +424,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.visible {
+  visibility: visible;
+}
 .absolute {
   position: absolute;
 }
@@ -484,6 +487,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .min-h-screen {
   min-height: 100vh;
 }
+.w-auto {
+  width: auto;
+}
 .w-10 {
   width: 2.5rem;
 }
@@ -498,6 +504,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .max-w-\[1120px\] {
   max-width: 1120px;
+}
+.max-w-full {
+  max-width: 100%;
 }
 .flex-1 {
   flex: 1 1 0%;

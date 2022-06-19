@@ -14,18 +14,19 @@
 </head>
 
 <body class="font-main bg-slate-100 text-gray-600">
+  <div class="toast"></div>
   <section class="max-w-[1120px] mx-auto shadow-lg flex flex-col h-full min-h-screen">
     <!-- Header start -->
     <header class="bg-primary text-white py-4 text-center shadow-md">
       <h1 class="text-lg font-bold lg:text-xl">Bookshelf App</h1>
     </header>
     <!-- Header end -->
-    <div class="flex flex-1">
+    <div class="flex flex-1 bg-gray-200 items-start">
       <!-- Sidebar start -->
-      <aside class="lg:w-sidebar bg-gray-200 py-3 space-y-3">
-        <h2 class="flex items-center gap-4 py-3 px-3 lg:px-5 font-bold">
-          <span class="h-12 w-12 flex-shrink-0 rounded-full inline-flex items-center justify-center bg-slate-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <aside class="lg:w-sidebar py-3 space-y-3 sticky top-0">
+        <h2 class="flex items-center gap-4 py-3 px-2 lg:px-5 font-bold">
+          <span class="h-10 w-10 lg:w-12 lg:h-12 flex-shrink-0 rounded-full inline-flex items-center justify-center bg-slate-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:w-8 lg:h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </span>
@@ -37,75 +38,104 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </form>
-        <div class="space-y-3 py-3">
-          <button type="button" class="active bg-gray-300/70 flex gap-4 px-5 py-3 w-full font-semibold text-primary">
+        <div class="space-y-3 py-3" role="tablist" aria-label="Navigation Menu">
+          <button type="button" class="bg-gray-300/30 flex gap-4 px-3 lg:px-5 py-3 w-full font-semibold" role="tab" aria-selected="true" aria-controls="form" id="tab-form">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
             <span class="hidden lg:block">Tambah Buku Baru</span>
           </button>
           <h3 class="font-semibold py-2 px-5 text-gray-500 hidden lg:block">Daftar Rak Buku</h3>
-          <ul>
-            <li class="block bg-gray-300/30 text-gray-700 font-medium">
-              <a class="lg:pl-8 px-5 py-3 inline-flex gap-2 justify-between w-full hover:bg-gray-100/30 transition" href="#">
-                <div class="inline-flex gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                  <span class="hidden lg:block">Semua</span>
-                </div>
-                <span class="hidden lg:inline-block">5</span>
-              </a>
-            </li>
-            <li class="block bg-gray-300/30 text-gray-700 font-medium">
-              <a class="lg:pl-8 px-5 py-3 inline-flex gap-2 justify-between w-full hover:bg-gray-100/30 transition" href="#">
-                <div class="inline-flex gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                  </svg>
-                  <span class="hidden lg:block">Belum Selesai Dibaca</span>
-                </div>
-                <span class="hidden lg:inline-block">3</span>
-              </a>
-            </li>
-            <li class="block bg-gray-300/30 text-gray-700 font-medium">
-              <a class="lg:pl-8 px-5 py-3 inline-flex gap-2 justify-between w-full hover:bg-gray-100/30 transition" href="#">
-                <div class="inline-flex gap-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span class="hidden lg:block">Selesai Dibaca</span>
-                </div>
-                <span class="hidden lg:inline-block">2</span>
-              </a>
-            </li>
-          </ul>
+          <nav role="navigation">
+            <ul role="list">
+              <li class="block bg-gray-300/30 text-gray-700 font-medium" role="tab" aria-selected="false" aria-controls="all-shelf" id="tab-all-books">
+                <a class="lg:pl-8 px-3 lg:px-5 py-3 inline-flex gap-2 justify-between w-full hover:bg-gray-100/30 transition" href="#">
+                  <div class="inline-flex gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    <span class="hidden lg:block">Semua</span>
+                  </div>
+                  <span class="hidden lg:inline-block count-label" aria-label="count" data-name="all"></span>
+                </a>
+              </li>
+              <li class="block bg-gray-300/30 text-gray-700 font-medium" role="tab" aria-selected="false" aria-controls="unread-shelf" id="tab-unread-books">
+                <a class="lg:pl-8 px-3 lg:px-5 py-3 inline-flex gap-2 justify-between w-full hover:bg-gray-100/30 transition" href="#">
+                  <div class="inline-flex gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                    </svg>
+                    <span class="hidden lg:block">Belum Selesai Dibaca</span>
+                  </div>
+                  <span class="hidden lg:inline-block count-label" aria-label="count" data-name="unread"></span>
+                </a>
+              </li>
+              <li class="block bg-gray-300/30 text-gray-700 font-medium" role="tab" aria-selected="false" aria-controls="read-shelf" id="tab-read-books">
+                <a class="lg:pl-8 px-3 lg:px-5 py-3 inline-flex gap-2 justify-between w-full hover:bg-gray-100/30 transition" href="#">
+                  <div class="inline-flex gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="hidden lg:block">Selesai Dibaca</span>
+                  </div>
+                  <span class="hidden lg:inline-block count-label" aria-label="count" data-name="read"></span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </aside>
       <!-- Sidebar end -->
-      <main class="lg:w-content w-full px-5 lg:px-6 py-8 space-y-5 bg-white">
-        <form action="#" method="post" id="form" class="space-y-5">
-          <h2 class="font-bold text-xl">Tambah Buku Baru</h2>
+      <main class="lg:w-content w-full px-4 lg:px-6 py-8 bg-white min-h-screen">
+        <form action="#" method="post" class="space-y-5" id="form" data-action="add" aria-labelledby="tab-form" role="tabpanel" tabindex="0">
+          <h2 class="font-bold text-xl" id="form-title">Tambah Buku Baru</h2>
           <div class="flex flex-col space-y-3">
-            <label for="judul" class="text-sm text-gray-600/90">Judul</label>
-            <input type="text" id="judul" class="bg-gray-200/50 border border-gray-300/90 focus:border-primary h-10 rounded-md px-3 focus:outline-none">
+            <label for="title" class="text-sm text-gray-700/90">Judul</label>
+            <input type="text" id="title" class="bg-gray-200/50 border border-gray-300/90 focus:border-primary h-10 rounded-md px-3 focus:outline-none" required>
           </div>
           <div class="flex flex-col space-y-3">
-            <label for="penulis" class="text-sm text-gray-600/90">Penulis</label>
-            <input type="text" id="penulis" class="bg-gray-200/50 border border-gray-300/90 focus:border-primary h-10 rounded-md px-3 focus:outline-none">
+            <label for="author" class="text-sm text-gray-700/90">Penulis</label>
+            <input type="text" id="author" class="bg-gray-200/50 border border-gray-300/90 focus:border-primary h-10 rounded-md px-3 focus:outline-none" required>
           </div>
           <div class="flex flex-col space-y-3">
-            <label for="tahun" class="text-sm text-gray-600/90">Tahun</label>
-            <input type="number" id="tahun" class="bg-gray-200/50 border border-gray-300/90 focus:border-primary h-10 rounded-md px-3 focus:outline-none">
+            <label for="year" class="text-sm text-gray-700/90">Tahun</label>
+            <input type="number" id="year" class="bg-gray-200/50 border border-gray-300/90 focus:border-primary h-10 rounded-md px-3 focus:outline-none" required>
           </div>
-          <label for="selesai" class="custom-checkbox py-2">
-            <input type="checkbox" id="selesai" class="checkbox" value="yes">
-            <span>Selesai dibaca</span>
-          </label>
+          <div class="relative custom-checkbox">
+            <input type="checkbox" id="is-complete-checkbox" class="checkbox" name="is-complete">
+            <label for="is-complete-checkbox" class="py-2">
+              Selesai dibaca
+            </label>
+          </div>
           <div class="py-3">
-            <button class="w-full py-3 px-5 bg-primary text-white rounded-md">Tambahkan buku sebagai <strong>Belum Selesai Dibaca</strong></button>
+            <button class="w-full py-3 px-5 bg-primary text-white rounded-md">Tambahkan buku sebagai <strong id="is-complete-label">Belum Selesai Dibaca</strong></button>
           </div>
         </form>
+        <div id="all-shelf" class="space-y-6" aria-labelledby="tab-all-books" role="tabpanel" tabindex="0" aria-hidden="true">
+          <h2 class="font-bold text-xl">Semua Buku</h2>
+          <div class="inline-flex gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+            <span>Belum Selesai Dibaca</span>
+          </div>
+          <dl class="my-4 rounded-md overflow-hidden border" id="unread-books-in-all-shelf"></dl>
+          <div class="inline-flex gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Selesai Dibaca</span>
+          </div>
+          <dl class="my-4 rounded-md overflow-hidden border" id="read-books-in-all-shelf"></dl>
+        </div>
+        <div id="unread-shelf" class="space-y-6" aria-labelledby="tab-unread-books" role="tabpanel" tabindex="0" aria-hidden="true">
+          <h2 class="font-bold text-xl">Buku Belum Selesai Dibaca</h2>
+          <dl class="my-4 rounded-md overflow-hidden border" id="unread-books"></dl>
+        </div>
+        <div id="read-shelf" class="space-y-8" aria-labelledby="tab-read-books" role="tabpanel" tabindex="0" aria-hidden="true">
+          <h2 class="font-bold text-xl">Buku Selesai Dibaca</h2>
+          <dl class="my-4 rounded-md overflow-hidden border" id="read-books"></dl>
+        </div>
       </main>
     </div>
     

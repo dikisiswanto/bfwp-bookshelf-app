@@ -40,7 +40,8 @@ gulp.task('build:js', () => {
 
 gulp.task('watch', () => {
   gulp.watch('src/*.html', gulp.series(['build:html', 'build:css']));
-  gulp.watch('src/**/*.js', gulp.series('build:js'));
+  gulp.watch('src/**/*.css', gulp.series('build:css'));
+  gulp.watch('src/**/*.js', gulp.series(['build:css', 'build:js']));
 });
 
 gulp.task('build', gulp.series(['build:html', 'build:css', 'build:js']));

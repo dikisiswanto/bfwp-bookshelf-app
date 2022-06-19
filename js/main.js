@@ -103,7 +103,7 @@ function updateCountLabel() {
 }
 /**
  * Mengubah judul form sesuai aksi
- * @param {string} action 
+ * @param {string} action
  */
 function setFormTitle(action) {
   if (action === ACTION.CREATE) {
@@ -115,8 +115,8 @@ function setFormTitle(action) {
 
 /**
  * Mengubah atribut pada form menyesuaikan aksi yang dipilih
- * @param {string} container 
- * @param {string} action 
+ * @param {string} container
+ * @param {string} action
  */
 function setForm(container, action) {
   const form = document.querySelector(container);
@@ -130,8 +130,8 @@ function setForm(container, action) {
 
 /**
  * Menandai buku sudah selesai dibaca atau belum
- * @param {number | string} bookId 
- * @param {boolean} isComplete 
+ * @param {number} bookId
+ * @param {boolean} isComplete
  */
 function markAsComplete(bookId, isComplete) {
   const book = books.find((book) => book.id === bookId);
@@ -178,9 +178,9 @@ function editBook(bookId) {
   const author = document.querySelector("#author");
   const year = document.querySelector("#year");
   const isComplete = document.querySelector("#is-complete-checkbox");
-  const form = document.querySelector("#form")
+  const form = document.querySelector("#form");
   form.setAttribute("data-id", bookId);
-  setForm('#form', ACTION.UPDATE);
+  setForm("#form", ACTION.UPDATE);
 
   title.value = book.title;
   author.value = book.author;
@@ -217,22 +217,29 @@ function updateBook(bookId) {
 
 /**
  * Membuat elemen buku dan menambahkan ke dalam DOM
- * @param {string} shelf 
- * @param {string} container 
+ * @param {string} shelf
+ * @param {string} container
  * @param {object} book
  */
 function pushBooksIntoShelfContainer(shelf, container, allBooks = books) {
   const shelfContainer = document.getElementById(container);
   shelfContainer.innerHTML = "";
-  const filteredBooks = allBooks.filter((book) => book.isComplete === (shelf === BOOKSHELF.READ));
+  const filteredBooks = allBooks.filter(
+    (book) => book.isComplete === (shelf === BOOKSHELF.READ)
+  );
   filteredBooks.forEach((book) => {
-    const textLabel = book.isComplete ? BOOKSHELF.UNREAD.toLowerCase() : BOOKSHELF.READ.toLowerCase();
-    const unReadIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>';
-    const readIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'
+    const textLabel = book.isComplete
+      ? BOOKSHELF.UNREAD.toLowerCase()
+      : BOOKSHELF.READ.toLowerCase();
+    const unReadIcon =
+      '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>';
+    const readIcon =
+      '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
 
     const iconButton = book.isComplete ? unReadIcon : readIcon;
     const bookElement = document.createElement("div");
-    bookElement.className = "flex justify-between items-center bg-gray-200/50 px-3 lg:px-6 py-4 border-b border-gray-300 gap-x-3"
+    bookElement.className =
+      "flex justify-between items-center bg-gray-200/50 px-3 lg:px-6 py-4 border-b border-gray-300 gap-x-3";
     bookElement.setAttribute("data-id", book.id);
     bookElement.innerHTML = `
       <div class="space-y-1 w-full">
@@ -262,27 +269,32 @@ function pushBooksIntoShelfContainer(shelf, container, allBooks = books) {
     `;
     bookElement.querySelector(".btn-edit").addEventListener("click", () => {
       editBook(book.id);
-      document.querySelector("#tab-form").dispatchEvent(new Event('click'));
+      document.querySelector("#tab-form").dispatchEvent(new Event("click"));
     });
     bookElement.querySelector(".btn-tag").addEventListener("click", () => {
       markAsComplete(book.id, !book.isComplete);
       document.dispatchEvent(new Event(UPDATED_EVENT));
       document.dispatchEvent(new Event(RENDER_EVENT));
-    })
+    });
     bookElement.querySelector(".btn-delete").addEventListener("click", () => {
       removeConfirmDialog();
-      createConfirmDialog(ACTION.DELETE, confirmationMessage(ACTION.DELETE), () => {
-        bookElement.remove();
-        books.splice(books.indexOf(book), 1);
-        saveData();
-        document.dispatchEvent(new Event(DELETED_EVENT));
-        document.dispatchEvent(new Event(RENDER_EVENT));
-      });
+      createConfirmDialog(
+        ACTION.DELETE,
+        confirmationMessage(ACTION.DELETE),
+        () => {
+          bookElement.remove();
+          books.splice(books.indexOf(book), 1);
+          saveData();
+          document.dispatchEvent(new Event(DELETED_EVENT));
+          document.dispatchEvent(new Event(RENDER_EVENT));
+        }
+      );
     });
     shelfContainer.appendChild(bookElement);
   });
   if (filteredBooks.length === 0) {
-    shelfContainer.innerHTML = '<p class="py-3 px-4 text-sm">Belum ada buku di rak ini</p>'
+    shelfContainer.innerHTML =
+      '<p class="py-3 px-4 text-sm">Belum ada buku di rak ini</p>';
   }
 }
 
@@ -298,23 +310,34 @@ function renderShelfData() {
 
 /**
  * Menyaring data buku berdasarkan kata kunci tertentu
- * @param {string} query 
+ * @param {string} query
  * @returns object of books after filtered with query
  */
 function searchBook(query) {
   const filteredBooks = books.filter((book) => {
-    return book.title.toLowerCase().includes(query.toLowerCase()) || book.author.toLowerCase().includes(query.toLowerCase());
+    return (
+      book.title.toLowerCase().includes(query.toLowerCase()) ||
+      book.author.toLowerCase().includes(query.toLowerCase())
+    );
   });
   return filteredBooks;
 }
 
 /**
  * Merender data buku hasil pencarian
- * @param {object} filteredBooks 
+ * @param {object} filteredBooks
  */
 function renderSearchResult(filteredBooks) {
-  pushBooksIntoShelfContainer(BOOKSHELF.UNREAD, "unread-books-in-search-result", filteredBooks);
-  pushBooksIntoShelfContainer(BOOKSHELF.READ, "read-books-in-search-result", filteredBooks);
+  pushBooksIntoShelfContainer(
+    BOOKSHELF.UNREAD,
+    "unread-books-in-search-result",
+    filteredBooks
+  );
+  pushBooksIntoShelfContainer(
+    BOOKSHELF.READ,
+    "read-books-in-search-result",
+    filteredBooks
+  );
   document.dispatchEvent(new Event(SEARCHED_EVENT));
 }
 
@@ -358,13 +381,13 @@ function handleTabs() {
     trigger.addEventListener("click", (e) => {
       e.preventDefault();
       toggleTabs(e);
-      setSearchResultVisibility(false)
+      setSearchResultVisibility(false);
     });
     trigger.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
         toggleTabs(e);
-        setSearchResultVisibility(false)
+        setSearchResultVisibility(false);
       }
     });
   });
@@ -427,9 +450,9 @@ function createConfirmDialog(title, message, callback) {
  */
 function removeConfirmDialog() {
   const dialog = document.querySelector("dialog");
-  if (dialog) { 
-    dialog.remove()
-  };
+  if (dialog) {
+    dialog.remove();
+  }
 }
 
 /**
@@ -448,13 +471,13 @@ function closeAllTabs() {
 
 /**
  * Mengatur apakah laman hasil pencarian akan ditampilkan atau tidak
- * @param {boolean} visible 
+ * @param {boolean} visible
  */
 function setSearchResultVisibility(visible) {
   if (visible) {
-    document.querySelector('#search-result').classList.remove('hidden');
+    document.querySelector("#search-result").classList.remove("hidden");
   } else {
-    document.querySelector('#search-result').classList.add('hidden');
+    document.querySelector("#search-result").classList.add("hidden");
   }
 }
 
@@ -519,12 +542,12 @@ document.addEventListener("DOMContentLoaded", function () {
   searchForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const query = e.target.querySelector("[name='query']").value;
-    if (query) {  
+    if (query) {
       const filteredBooks = searchBook(query);
       renderSearchResult(filteredBooks);
-      document.querySelector('#query').innerHTML = query;
+      document.querySelector("#query").innerHTML = query;
     }
-  })
+  });
 
   renderShelfData();
 });

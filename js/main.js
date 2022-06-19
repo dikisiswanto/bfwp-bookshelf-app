@@ -74,7 +74,7 @@ function loadDataFromStorage() {
 }
 
 /**
- *
+ *  Mendapatkan jumlah buku berdasarkan filter tertentu
  * @param {boolean} filter
  * @returns number of books
  */
@@ -128,6 +128,11 @@ function setForm(container, action) {
   setFormTitle(action);
 }
 
+/**
+ * Menandai buku sudah selesai dibaca atau belum
+ * @param {number | string} bookId 
+ * @param {boolean} isComplete 
+ */
 function markAsComplete(bookId, isComplete) {
   const book = books.find((book) => book.id === bookId);
   book.isComplete = isComplete;
@@ -291,6 +296,11 @@ function renderShelfData() {
   pushBooksIntoShelfContainer(BOOKSHELF.READ, "read-books");
 }
 
+/**
+ * Menyaring data buku berdasarkan kata kunci tertentu
+ * @param {string} query 
+ * @returns object of books after filtered with query
+ */
 function searchBook(query) {
   const filteredBooks = books.filter((book) => {
     return book.title.toLowerCase().includes(query.toLowerCase()) || book.author.toLowerCase().includes(query.toLowerCase());
@@ -298,6 +308,10 @@ function searchBook(query) {
   return filteredBooks;
 }
 
+/**
+ * Merender data buku hasil pencarian
+ * @param {object} filteredBooks 
+ */
 function renderSearchResult(filteredBooks) {
   pushBooksIntoShelfContainer(BOOKSHELF.UNREAD, "unread-books-in-search-result", filteredBooks);
   pushBooksIntoShelfContainer(BOOKSHELF.READ, "read-books-in-search-result", filteredBooks);
@@ -377,7 +391,6 @@ function createNotificationToast(message, type) {
  * @param {string} message
  * @param {function} callback
  */
-
 function createConfirmDialog(title, message, callback) {
   const dialog = document.createElement("div");
   dialog.setAttribute("open", "true");
@@ -409,6 +422,9 @@ function createConfirmDialog(title, message, callback) {
   });
 }
 
+/**
+ * Menghapus confirm dialog dari DOM jika ada
+ */
 function removeConfirmDialog() {
   const dialog = document.querySelector("dialog");
   if (dialog) { 
@@ -416,6 +432,9 @@ function removeConfirmDialog() {
   };
 }
 
+/**
+ * Menutup semua tab yang ada di menu navigasi
+ */
 function closeAllTabs() {
   const tabs = document.querySelectorAll('[role="tab"]');
   const tabPanels = document.querySelectorAll('[role="tabpanel"]');
@@ -427,6 +446,10 @@ function closeAllTabs() {
   });
 }
 
+/**
+ * Mengatur apakah laman hasil pencarian akan ditampilkan atau tidak
+ * @param {boolean} visible 
+ */
 function setSearchResultVisibility(visible) {
   if (visible) {
     document.querySelector('#search-result').classList.remove('hidden');

@@ -101,6 +101,7 @@ function updateCountLabel() {
     item.innerHTML = count > 0 ? count : "";
   });
 }
+
 /**
  * Mengubah judul form sesuai aksi
  * @param {string} action
@@ -443,7 +444,6 @@ function createConfirmDialog(title, message, callback) {
     dialog.remove();
   });
 }
-
 
 /**
  * Menutup semua tab yang ada di menu navigasi

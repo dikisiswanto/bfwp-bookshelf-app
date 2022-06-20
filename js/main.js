@@ -277,7 +277,6 @@ function pushBooksIntoShelfContainer(shelf, container, allBooks = books) {
       document.dispatchEvent(new Event(RENDER_EVENT));
     });
     bookElement.querySelector(".btn-delete").addEventListener("click", () => {
-      removeConfirmDialog();
       createConfirmDialog(
         ACTION.DELETE,
         confirmationMessage(ACTION.DELETE),
@@ -445,15 +444,6 @@ function createConfirmDialog(title, message, callback) {
   });
 }
 
-/**
- * Menghapus confirm dialog dari DOM jika ada
- */
-function removeConfirmDialog() {
-  const dialog = document.querySelector("dialog");
-  if (dialog) {
-    dialog.remove();
-  }
-}
 
 /**
  * Menutup semua tab yang ada di menu navigasi

@@ -187,6 +187,7 @@ function editBook(bookId) {
   author.value = book.author;
   year.value = book.year;
   isComplete.checked = book.isComplete;
+  toggleIsCompleteCheckbox();
 }
 
 /**

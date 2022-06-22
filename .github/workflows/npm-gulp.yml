@@ -29,9 +29,9 @@ jobs:
       run: yarn build
       
     - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@3.6.1
+      uses: JamesIves/github-pages-deploy-action@4.3.3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: production # Nama branch yang akan digunakan.
+        BRANCH: gh-pages # Nama branch yang akan digunakan.
         FOLDER: dist # Folder yang akan dideploy
         CLEAN: true # Hapus file di dalam branch
